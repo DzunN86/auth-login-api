@@ -6,14 +6,14 @@ const handleErrors = (err) => {
   console.log(err.message, err.code);
   let errors = { email: '', password: '' };
 
-  //incorrect email
+  // incorrect email
   if (err.message === 'incorrect email') {
-    errors.email = 'that email is not registered';
+    errors.email = 'That email is not registered';
   }
 
-  //incorrect password
+  // incorrect password
   if (err.message === 'incorrect password') {
-    errors.password = 'the password is incorrect';
+    errors.password = 'That password is incorrect';
   }
 
   // duplicate email error
@@ -38,7 +38,7 @@ const handleErrors = (err) => {
 // create json web token
 const maxAge = 3 * 24 * 60 * 60;
 const createToken = (id) => {
-  return jwt.sign({ id }, 'vj86', {
+  return jwt.sign({ id }, 'net ninja secret', {
     expiresIn: maxAge
   });
 };
@@ -76,7 +76,8 @@ module.exports.login_post = async (req, res) => {
     const token = createToken(user._id);
     res.cookie('jwt', token, { httpOnly: true, maxAge: maxAge * 1000 });
     res.status(200).json({ user: user._id });
-  } catch (err) {
+  } 
+  catch (err) {
     const errors = handleErrors(err);
     res.status(400).json({ errors });
   }
